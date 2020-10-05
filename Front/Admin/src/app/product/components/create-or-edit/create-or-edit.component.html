@@ -1,0 +1,101 @@
+<notifier-container></notifier-container>
+<div class="card-body loading">
+
+  <form #form="ngForm" [formGroup]="dataForm" (ngSubmit)="onSubmit(dataForm.value)" novalidate>
+    <div class="card">
+      <div class="card-header">
+        <header>
+          {{pageTitle}}
+        </header>
+      </div>
+      <div class="bg-white card-body col-12 mb-4">
+        <div class="border-bottom p-2">
+          اطلاعات پایه
+        </div>
+        <div class="form-group col-md-12">
+          <div class="text-right label-input">
+            دسته
+          </div>
+          <div>
+            <select class="form-control" formControlName="categoryId" *ngIf="categories != undefined">
+              <option *ngFor="let item of categories ; let i=index" [value]="item.id">{{item.title}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group col-md-12">
+          <div class="text-right label-input">
+            عنوان
+          </div>
+          <input type="text" class="form-control" formControlName="title">
+        </div>
+
+
+        <div class="form-group col-md-6">
+          <div class="text-right label-input">
+            قیمت
+          </div>
+          <input id="price" class="form-control" type="number" required name="price" formControlName="price" />
+        </div>
+
+
+        <div class="form-group col-md-6">
+          <div class="text-right label-input">
+            تعداد
+          </div>
+          <input type="number" class="form-control" formControlName="count" />
+        </div>
+        <div class="form-group col-md-6">
+          <div class="text-right label-input">
+            کد محصول
+          </div>
+          <input type="text" class="form-control" formControlName="code" />
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3" *ngIf="id && id>0 && model != undefined">
+          <img src="/upload/product/{{id}}/{{model.thumbnail}}" *ngIf="model.thumbnail != undefined" />
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          عکس:
+          <input type="file" formControlName="pic" accept="image/png,image/gif,image/jpeg,image/jpg" #icon
+                 (change)="uploadIcon(icon.files)" />
+          <span *ngIf="errorFile" class="text-danger"> {{errorFile}}</span>
+
+        </div>
+        <div class="row mt-5" *ngIf="id && id>0 && model != undefined && model.pictures != undefined">
+          گالری موجود:
+          <ng-template ngFor let-item [ngForOf]="model.pictures" let-i="index">
+            <div class="col-md-4 col-sm-6">
+              <button type="button" class="bg-danger text-white" style="position: relative;top: 50px;right: 50px;" (click)="deletePic(item.id, i)"><i class="fa fa-2x fa-remove"></i></button>
+              <img src="/upload/product/{{id}}/{{item.thumbnail}}" *ngIf="item.thumbnail != undefined" style="height:250px" />
+
+            </div>
+          </ng-template>
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          گالری:
+          <input type="file" formControlName="picturs" multiple accept="image/png,image/gif,image/jpeg,image/jpg" #pics
+                 (change)="uploadFiles(pics.files)" />
+          <span *ngIf="errorFile" class="text-danger"> {{errorGallery}}</span>
+
+        </div>
+        <div class="form-group col-md-12">
+          <div class="text-right label-input">
+            توضیحات
+          </div>
+          <textarea class="form-control" formControlName="description"></textarea>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-light pull-left m-2" [routerLink]="['/product']">
+          انصراف
+        </button>
+        <button type="submit" class="btn btn-success pull-left m-2">ثبت</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- loading -->
+  <!-- add calss loading to custome dive -->
+  <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+  <!-- /loading -->
+</div>

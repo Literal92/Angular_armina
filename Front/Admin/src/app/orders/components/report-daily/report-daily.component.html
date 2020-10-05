@@ -1,0 +1,127 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">گزارش روزانه</h4>
+
+  <div class="card-body">
+    <div class="row mb-5" *ngIf="searchForm">
+      <form class="col-12" (ngSubmit)="onSubmit(searchForm.value)"
+            [formGroup]="searchForm"
+            novalidate>
+        <div class="row">
+
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group">
+              <label class="mr-1">
+                از تاریخ
+              </label>
+              <span class="">
+                <dp-date-picker dir="ltr"
+                                formControlName="from"
+                                mode="day"
+                                theme="dp-material"
+                                [config]="datePickerConfig">
+                </dp-date-picker>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6">
+
+            <div class="form-group">
+              <label class="mr-1">
+                تا تاریخ
+              </label>
+              <span class="">
+                <dp-date-picker dir="ltr"
+                                formControlName="to"
+                                mode="day"
+                                theme="dp-material"
+                                [config]="datePickerConfig">
+                </dp-date-picker>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <button type="submit" class="btn btn-success w-100">
+              <i class="fa fa-search"></i>
+              جستجو
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row mb-5" *ngIf="searchMonthlyForm">
+      <form class="col-12" (ngSubmit)="onSubmitMonthly(searchMonthlyForm.value)"
+            [formGroup]="searchMonthlyForm"
+            novalidate>
+        <div class="row">
+
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group">
+              <label class="mr-1">
+                از ماه
+              </label>
+              <span class="">
+                <select class="form-control" formControlName="fromMonth">
+                  <option *ngFor="let item of months" [value]="item.id">{{item.display}}</option>
+                </select>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group">
+              <label class="mr-1">
+                تا ماه
+              </label>
+              <span class="">
+                <select class="form-control" formControlName="toMonth">
+                  <option *ngFor="let item of months" [value]="item.id">{{item.display}}</option>
+                </select>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group">
+              <label class="mr-1">
+                سال
+              </label>
+              <span class="">
+                <select class="form-control" formControlName="year">
+                  <option *ngFor="let item of years" [value]="item.id">{{item.display}}</option>
+                </select>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <button type="submit" class="btn btn-success w-100">
+              <i class="fa fa-search"></i>
+              جستجو
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart class="chart"
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType">
+      </canvas>
+    </div>
+  </div>
+
+</div>
+
+

@@ -1,0 +1,96 @@
+
+<app-sidebar [fixed]="true" [display]="'lg'">
+    <nav calss="sidebar-nav" id="nav-scroll">
+      <ul class="nav">
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link text-danger cursor-pointer" (click)="logout()">
+            <i class="fa fa-power-off fa-lg"></i> [{{displayName}}]
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin']">
+          <a class="nav-link" [routerLink]="['/usermanager']">
+            <i class="fa fa-user-circle-o"></i>
+
+            مدیریت کاربران
+
+
+          </a>
+        </li>
+        <li class="nav-item d-none" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin']">
+          <a class="nav-link" [routerLink]="['/rolls']">
+            <i class="fa fa-envelope"></i>
+            مدیریت نقش ها
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin','productAdmin']">
+          <a class="nav-link" [routerLink]="['/categories']">
+            <i class="fa fa-institution"></i>
+            مدیریت دسته بندی
+          </a>
+        </li>
+
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin','productAdmin']">
+          <a class="nav-link" [routerLink]="['/product']">
+            <i class="fa fa-clock-o"></i>
+            مدیریت محصولات
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin','provider']">
+          <a class="nav-link" [routerLink]="['/csv']">
+            <i class="fa fa-clock-o"></i>
+            مدیریت کد رهگیری
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin','productAdmin']">
+          <a class="nav-link" [routerLink]="['/field']">
+            <i class="fa fa-pencil-square"></i>
+            مدیریت فیلد ها
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin']">
+          <a class="nav-link" [routerLink]="['/tag']">
+            <i class="fa fa-pencil-square"></i>
+            مدیریت تگ ها
+          </a>
+        </li>
+
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin','accountantAdmin', 'orderAdmin','reportAdmin']">
+          <a class="nav-link" [routerLink]="['/orders']">
+            <i class="fa fa-pencil-square"></i>
+            مدیریت سفارش ها
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin','reportAdmin']">
+          <a class="nav-link" [routerLink]="['/orders/report-daily']">
+            <i class="fa fa-envelope"></i>
+            گزارش مالی
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin','orderAdmin']">
+          <a class="nav-link" [routerLink]="['/orders/address']">
+            <i class="fa fa-pencil-square"></i>
+            ادرس سفارشات بسته بندی نشده
+          </a>
+        </li>
+        <li class="nav-item" [hasAuthUserViewPermission]
+            [requiredRoles]="['admin']">
+          <a class="nav-link" [routerLink]="['/image-date']">
+            <i class="fa fa-pencil-square"></i>
+            عکس روز
+          </a>
+        </li>
+      </ul>
+    </nav>
+  <!-- <app-sidebar-minimizer></app-sidebar-minimizer> -->
+</app-sidebar>
+

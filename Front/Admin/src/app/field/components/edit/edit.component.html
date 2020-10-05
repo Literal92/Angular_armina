@@ -1,0 +1,71 @@
+<notifier-container></notifier-container>
+<div class="card">
+  <h4 class="card-header"> ویرایش فیلد </h4>
+  <div class="card-body" >
+    <div class="row" *ngIf="editForm">
+      <form class="col-12" (ngSubmit)="onSubmit(editForm.value)"
+            [formGroup]="editForm"
+            style="padding:20px"
+            novalidate>
+
+        <!-- title-->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              عنوان
+            </label>
+            <input type="text" class="form-control" placeholder="عنوان" value="" formControlName="title" />
+          </div>
+        </div>
+
+        <!-- title-->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              عنوان برای نمایش
+            </label>
+            <input type="text" class="form-control" placeholder="عنوان برای نمایش" value="" formControlName="displayTitle" />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label style="min-width:100px !important">
+              نوع فیلد
+            </label>
+            <select class="form-control" formControlName="fieldType" style="min-width:100px !important">
+              <option *ngFor="let item of types; let i=index" [value]="item.id">
+                {{item.display}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- description-->
+        <div class="col-6">
+          <div class="form-group">
+            <label>
+              توضیحات
+            </label>
+            <textarea type="text" class="form-control" placeholder="توضیحات" value="" formControlName="description"></textarea>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              ترتیب
+            </label>
+            <input type="number" class="form-control" value="" formControlName="order" />
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-success text-white mt-4">ثبت</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

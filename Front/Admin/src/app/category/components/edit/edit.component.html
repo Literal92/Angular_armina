@@ -1,0 +1,46 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">ویرایش دسته</h4>
+
+  <div class="row container mt-4 mb-4" *ngIf="editForm">
+    <form  class="form-horizontal"(ngSubmit)="onSubmit(editForm.value)"
+          [formGroup]="editForm"
+          style="padding:20px"
+          novalidate>
+      <div class="form-group row">
+        <div class="col-sm-12 col-xs-12 mt-3">
+          مسیر دسته:
+          <select class="form-control" formControlName="parentId">
+            <option *ngFor="let item of serviceItems" [value]="item.id">{{item.path}}</option>
+          </select>
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          عنوان:
+          <span class="font-xs text-danger">الزامی </span>
+          <input type="text" class="form-control" placeholder="عنوان" formControlName="title" />
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          ترتیب:
+          <input type="number" class="form-control" placeholder="ترتیب" formControlName="order" />
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          ایکون موجود:<img class="mb-3" src="/upload/category/{{serviceItem.id}}/{{serviceItem.icon}}" />
+          <br />
+          ایکون جدید: <input type="file" formControlName="icon" accept="image/png,image/gif,image/jpeg,image/jpg"
+                             #icon (change)="uploadIcon(icon.files)" />
+          <span *ngIf="errorFile!=undefined">{{errorFile}}</span>
+
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-success text-white mt-4" [disabled]="!editForm.valid">ثبت</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+

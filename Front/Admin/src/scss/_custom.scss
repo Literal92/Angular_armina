@@ -1,0 +1,77 @@
+// Here you can add other styles
+@font-face {
+  font-family: 'IRanSans';
+  src: url('../assets/IRANSansWeb.woff');
+
+  }
+body {
+  font-family: 'IRanSans', Fallback, sans-serif;
+}
+
+  .invalid-feedback {
+    display: block !important;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  .show {
+    visibility: visible !important;
+  }
+
+  .dir-rtl {
+    direction: rtl;
+  }
+
+  .dir-ltr {
+    direction: ltr;
+  }
+
+  .app-footer {
+    min-height: 50px;
+  }
+
+  .input-group > .input-group-prepend > .btn, .input-group > .input-group-prepend > .input-group-text, .input-group > .input-group-append:not(:last-child) > .btn, .input-group > .input-group-append:not(:last-child) > .input-group-text, .input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .login-body {
+    background-image: url('/assets/img/bg.jpg');
+  }
+.leaflet-popup.leaflet-zoom-animated {
+  bottom: 25px !important
+}
+dp-date-picker.dp-material .dp-picker-input {
+  padding-right: 10px;
+  height: 36px !important;
+  border: none;
+  border: 1px solid #e4e7ea;
+  width:100% !important;
+}
+.sidebar-minimized .sidebar .nav-link i{
+margin-left:15px;cursor:pointer;
+}
+
+.sidebar-minimized .sidebar .nav-link {
+  padding-right: 20px !important;
+}
+
+
+.loadingBox{  z-index: 99999999;  position: fixed;  top: 0;  left: 0;  background: #f5f5f590;  width: 100vw;  height: 100vh;  display: flex;	flex-direction: column;	flex-wrap: nowrap;	justify-content: center;	align-items: center;	align-content: center;}
+.loadingBox > .item{text-align: center; padding: 50px;  border-radius: 15px; }
+
+.body-print .card-header{display:none}
+
+.body-print .card-body{padding:0 !important}
+.body-print .container-fluid{padding:0 !important}
+.body-print .app-footer{display:none}
+.body-print .breadcrumb{display:none}
+@media print {
+}

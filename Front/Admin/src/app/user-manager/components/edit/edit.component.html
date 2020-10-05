@@ -1,0 +1,76 @@
+<notifier-container></notifier-container>
+<div class="card">
+  <h4 class="card-header"> ویرایش کاربر  </h4>
+
+  <div class="row loading" *ngIf="editForm">
+    <form class="col-12" (ngSubmit)="onSubmit(editForm.value)"
+          [formGroup]="editForm"
+          style="padding:20px"
+          novalidate>
+      <div class="col-md-6">
+        <label>نام کاربری-موبایل</label>
+        <div class="">
+          <input formControlName="userName" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>نام</label>
+        <div class="">
+          <input formControlName="firstName" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>نام خانوادگی</label>
+        <div class="">
+          <input formControlName="lastName" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>موبایل</label>
+        <div class="">
+          <input formControlName="mobile" class="form-control" />
+          <em class="error invalid-feedback"
+              *ngIf="editForm.controls.mobile.errors?.mobile
+                          && editForm.controls.mobile.dirty">
+            {{editForm.controls.mobile.errors?.mobile}}
+          </em>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>تلفن</label>
+        <div class="">
+          <input formControlName="phoneNumber" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>کد ملی</label>
+        <div class="">
+          <input formControlName="natioalCode" class="form-control" />
+          <em class="error invalid-feedback"
+              *ngIf="editForm.controls.natioalCode.errors?.natioalCode
+                          && editForm.controls.natioalCode.dirty">
+            {{editForm.controls.natioalCode.errors?.natioalCode}}
+          </em>
+        </div>
+      </div>
+      <!--<div class="col-sm-12 col-xs-12 mt-3">
+        عکس موجود:
+        <img src="/upload/users/{{photoFileName}}" *ngIf="editItem.photoFileName"/>
+
+      </div>
+      <div class="col-sm-12 col-xs-12 mt-3">
+        عکس:
+        <input type="file" formControlName="photoFileName" accept="image/png,image/gif,image/jpeg,image/jpg"
+               #icon (change)="uploadIcon(icon.files)" />
+
+      </div>-->
+      <div class="col-12">
+        <button type="submit" class="btn btn-success text-white mt-4" [disabled]="!editForm.valid">ثبت</button>
+      </div>
+
+    </form>
+  </div>
+  <!-- loading -->
+  <!-- add calss loading to custome dive -->
+  <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+</div>

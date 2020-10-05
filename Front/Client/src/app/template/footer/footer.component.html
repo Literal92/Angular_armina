@@ -1,0 +1,36 @@
+
+<footer id="footer">
+  <div class="footer-nav-wrapper">
+    <a [routerLink]="['']" class="footer-nav-single">
+      <div class="menu-wrapper">
+        <img src="assets/img/icons/home.svg" class="injectable" alt="">
+        <span>صفحه اصلی</span>
+      </div>
+    </a>
+    <!--<a href="chat.html" class="footer-nav-single">
+    <div class="menu-wrapper">
+      <img src="assets/img/icons/heart.svg" class="injectable" alt="">
+      <span>  من </span>
+    </div>
+  </a>-->
+    <a [routerLink]="['/product/cart']" class="footer-nav-single">
+      <div class="menu-wrapper">
+        <img src="assets/img/icons/cart.svg" class="injectable" alt="">
+        <span>سبد خرید</span>
+      </div>
+    </a>
+    <a [routerLink]="['/order/list']" class="footer-nav-single">
+      <div class="menu-wrapper">
+        <img src="assets/img/icons/chat.svg" class="injectable" alt="">
+        <span>تاریخچه </span>
+      </div>
+    </a>
+    
+    <a [routerLink]="['/login']" class="footer-nav-single" *ngIf="!isLoggedIn" id="login-footer">
+      <div class="menu-wrapper">
+        <img src="assets/img/icons/profile.svg" class="injectable" alt="">
+        <span>ورود </span>
+      </div>
+    </a>
+  </div>
+</footer>

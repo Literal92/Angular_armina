@@ -1,0 +1,115 @@
+<notifier-container></notifier-container>
+
+<div class="card ordersc">
+  <div class="card-header">مدیریت عکس های روز</div>
+
+  <div class="card-body loading">
+
+    <form (ngSubmit)="onSubmit(searchForm.value)"
+          class="form-horizontal" [formGroup]="searchForm" style="padding:20px" novalidate>
+      <div class="row">
+        <div class="col-sm-5 col-xs-12 text-center">
+          روز:
+            <dp-date-picker dir="ltr"
+                            formControlName="date"
+                            mode="day"
+                            theme="dp-material"
+                            [config]="datePickerConfig">
+            </dp-date-picker>
+        </div>
+       <button class=" btn btn-info text-white" type="submit">جستجو</button>
+      </div>
+    </form>
+
+
+
+    <div class="row p-0" *ngIf="list != undefined">
+      <div class="col-sm-12">
+        <a class="btn btn-info mb-3 text-white" [routerLink]="['/image-date/add']">
+          <i class="fa fa-plus mr-1"></i>جدید
+        </a>
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-6 mb-2">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <table class="table table-responsive-sm table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class=" p-1">
+                #
+              </th>
+              <th class="text-center">روز</th>
+              <th class="text-center">تعداد</th>
+              <th class="text-center"></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="list" let-i="index">
+              <tr>
+
+                <td class="text-center">{{row+i}}</td>
+                <td class="text-center">
+                  {{item.datePersian}}
+                </td>
+                <td class="text-center">
+                  <label class="pt-1" style="width: 32px !important;
+                                border-radius: 100%;
+                                height: 32px;
+                                border: 1px solid green;">
+                  {{item.count}}
+                  </label>
+                </td>
+                <td class="text-center">
+                  <a class="btn btn-warning" [routerLink]="['/image-date/edit', item.id]">
+                    ویرایش
+                  </a>
+                  <a class="btn btn-danger" (click)="onDelete(item.id,i)">
+                    حذف
+                  </a>
+                </td>
+
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+        <!-- paging -->
+        <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
+                                 [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
+                                 [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)">
+
+            </pagination-controls>
+          </div>
+        </div>
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+

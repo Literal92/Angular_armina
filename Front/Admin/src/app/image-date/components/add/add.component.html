@@ -1,0 +1,62 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header" *ngIf="id=== undefined || id===0">
+    افزودن عکس روز
+  </h4>
+  <h4 class="card-header" *ngIf="id !== undefined  && id>0">
+    ویرایش عکس روز
+  </h4>
+  <div class=" mt-4 mb-4 loading" *ngIf="addForm">
+    <form (ngSubmit)="onSubmit(addForm.value)" class="form-horizontal"
+          [formGroup]="addForm"
+          style="padding:20px;padding-top:10px"
+          novalidate>
+
+      <div class="form-group">
+
+        <div class="col-sm-12 col-xs-12 mt-1">
+          روز: <label class="text-danger">{{oldDate}}</label>
+          <span class="font-xs text-danger">*</span>
+          <div class="">
+            <dp-date-picker dir="ltr"
+                            formControlName="date"
+                            mode="day"
+                            theme="dp-material"
+                            [config]="datePickerConfig">
+            </dp-date-picker>
+          </div>
+        </div>
+        <div class="col-sm-12 mt-4 mb-4" *ngIf="existImages != undefined">
+          <ng-template ngFor let-item [ngForOf]="existImages" let-i="index">
+            <div class="col-sm-12 overflow-auto">
+              <img src="/upload/ImageDate/{{id}}/{{item}}" />
+              <button type="button" class="btn btn-danger" (click)="onDelete(oldDate,item, i)">
+                <i class="fa fa-remove"></i>
+              </button>
+            </div>
+          </ng-template>
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          تصاویر:
+          <input type="file" multiple formControlName="images" accept="image/png,image/jpeg,image/jpg"
+                 #photo (change)="uploadPhoto(photo.files)" />
+          <span class="text-danger" *ngIf="errorPhoto!=undefined">{{errorPhoto}}</span>
+
+        </div>
+
+        <div class="col-12">
+          <div class="progress form-group mt-3 mb-2" *ngIf="progress > 0">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success btn-lg text-white mt-4" [disabled]="!addForm.valid">ثبت</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+

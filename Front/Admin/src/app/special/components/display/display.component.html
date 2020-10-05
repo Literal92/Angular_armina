@@ -1,0 +1,148 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <div class="card-header">
+    لیست درخواست های ویژه شدن
+  </div>
+
+  <div class="card-body">
+    <div *ngIf="searchForm">
+      <form (ngSubmit)="onSearch(searchForm.value)"
+            [formGroup]="searchForm"
+            style="padding:20px"
+            novalidate>
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <div class="form-group">
+              <label> شماره موبایل</label>
+              <div class="">
+                <input type="text" class="form-control" formControlName="mobile" placeholder="شماره موبایل" />
+              </div>
+            </div>
+          </div>
+          <!-- status -->
+          <div class="col-md-4 col-sm-6 ">
+            <div class="form-group">
+              <label>
+                وضعیت 
+              </label>
+              <select class="form-control" formControlName="state">
+                <option *ngFor="let item of status; let i=index" [value]="item.id">
+                  {{item.display}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12">
+            <div class="form-group mt-4 pt-1">
+              <button class="btn btn-success">جستجو</button>
+            </div>
+
+          </div>
+
+          </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 loading">
+        <table class="table table-responsive-xl table-hover table-light"
+          *ngIf=" list != undefined ; else notfound">
+          <thead>
+            <tr>
+              <th class="text-center">ردیف</th>
+              <th class="text-center">خدمت</th>
+              <th class="text-center">موبایل</th>
+              <th class="text-center">تاریخ در خواست</th>
+              <th class="text-center">موجودی کیف پول</th>
+              <th class="text-center">وضعیت</th>
+              <th class="text-center">تاریخ پذیرش</th>
+              <th class="text-center">تاریخ اتمام</th>
+              <th class="text-center">عملیات</th>
+            </tr>
+          </thead>
+          <tbody *ngIf=" list != undefined ; else notfound2">
+            <ng-template ngFor let-item [ngForOf]="list" let-i="index">
+              <tr>
+                <td class="text-center">{{i+row}}</td>
+                <td class="text-center">{{item.provider.title}}</td>
+                <td class="text-center">{{item.provider.user.mobile}}</td>
+                <td class="text-center">{{item.request | momentJalaali:'jYYYY/jMM/jDD' }}</td>
+                <td class="text-center">
+                  <label *ngIf="item.provider.user.walletPrice!= undefined">{{item.provider.user.walletPrice | toPrice }} </label>
+                </td>
+
+                <td class="text-center">
+                  <div [ngSwitch]="item.state">
+                    <span *ngSwitchCase="0" >معلق</span>
+                    <span *ngSwitchCase="1" >رد درخواست</span>
+                    <span *ngSwitchCase="2" >تایید</span>
+                  </div>
+                </td>
+
+                <td class="text-center">
+                <span *ngIf="item.start !=undefined">
+                  {{item.start | momentJalaali:'jYYYY/jMM/jDD' }}
+                </span>
+                  </td>
+                <td class="text-center">
+                  <span *ngIf="item.end  !=undefined">
+                    {{item.end | momentJalaali:'jYYYY/jMM/jDD' }}
+                    </span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-success" *ngIf="item.state == 0"  (click)="onAccept(item.id,i)">تایید</button>
+                  <button class="btn btn-danger" *ngIf="item.state == 0" (click)="onReject(item.id,i)">رد درخواست</button>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+        <ng-template #notfound>
+          <div class="alert alert-danger text-center col-12">
+            داده ای یافت نشد
+          </div>
+        </ng-template>
+        <ng-template #notfound2>
+          <td class="alert alert-danger text-center" colspan="9">
+            داده ای یافت نشد
+          </td>
+        </ng-template>
+        <!-- paging -->
+        <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
+              [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
+              [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+              [screenReaderPageLabel]="labels.screenReaderPageLabel"
+              [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)">
+
+            </pagination-controls>
+          </div>
+        </div>
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+
+      </div>
+    </div>
+  </div>
+  <!-- /request list -->
+</div>

@@ -1,0 +1,141 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">مدیریت نقش ها </h4>
+
+  <div class="card-body loading">
+    <div *ngIf="searchForm" [ngClass]="{'hidden':showParent===false}">
+      <form (ngSubmit)="onSubmit(searchForm.value)"
+            [formGroup]="searchForm"
+            style="padding:20px"
+            novalidate>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+              <label> نام نقش</label>
+              <div class="">
+                <input type="text" class="form-control" formControlName="userName" placeholder="نام کاربری" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <button type="submit" class="btn btn-success">
+              <i class="fa fa-search"></i>
+              جستجو
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row" [ngClass]="{'hidden':showParent===false}">
+      <!-- <div class="col-12 mt-2">
+        <a class="btn btn-info mb-3 text-white" [routerLink]="['/usermanager/add']">
+          <i class="fa fa-plus mr-1"></i>جدید
+        </a>
+
+      </div> -->
+      <!-- <div class="col-md-2 col-sm-3 col-xs-6 mb-2">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div> -->
+      <div class="col-12">
+        <table class="table table-responsive-md table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center">ردیف</th>
+              <th class="text-center">نام نقش</th>
+              <th class="text-center">سطح دسترسی</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="rolls" let-i="index">
+              <tr>
+                <td class="text-center">{{row+i}}</td>
+
+                <td class="text-center">
+                  <span *ngIf="item.description != undefined">
+                    {{item.description}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-primary" (click)="onPermit(item.id,i)">نمایش</button>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+        <!-- paging -->
+        <!-- <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id"
+                                 [maxSize]="maxSize"
+                                 [directionLinks]="directionLinks"
+                                 [autoHide]="autoHide"
+                                 [responsive]="responsive"
+                                 [previousLabel]="labels.previousLabel"
+                                 [nextLabel]="labels.nextLabel"
+                                 [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                 (pageChange)="onPageChange($event)">
+
+            </pagination-controls>
+          </div>
+        </div> -->
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading"
+                     [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+    <div class="row justify-content-md-center" [ngClass]="{'hidden':showChPass===false}">
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal permission -->
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">دسترسی ها</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row" *ngIf="permissions!=undefined">
+        <!-- <div class="col-sm-12">
+          <button class="btn btn-success btn-lg" (click)="onSavePermit()">ثبت</button>
+        </div> -->
+        <ng-template ngFor let-item [ngForOf]="permissions" let-i="index">
+          <div class="col-sm-12 col-xs-12 mt-4" *ngIf="i>0 && item.groupName != permissions[i-1].groupName">
+           <!-- {{item.groupName == 'Reserve' ? 'رزور' : 'دسترسی ها'}}-->
+          </div>
+          <div class="col-sm-6 col-xs-12 p-1 mt-2" style="border:1px solid #cacaca">
+              <input type="checkbox" name="claim-{{i}}"
+                      [checked]="item |checkRoleClaim : roleId : claimExist"
+                      #permit (change)="onChPermit(permit.checked,item,i)">
+            {{item.description}}
+          </div>
+        </ng-template>
+        <div class="col-sm-12 mt-2">
+          <button class="btn btn-success btn-lg" (click)="onSavePermit()">ثبت</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

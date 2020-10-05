@@ -1,0 +1,113 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">مدیریت دسته بندی ها</h4>
+
+  <div class="card-body loading">
+    <div class="row">
+      <div class="col-md-12 col-sm-12" *ngIf="categories != undefined">
+        <input type="text" placeholder="عنوان" class="form-control mb-3" #title value="" style="min-width: 200px; max-width: 400px;display: inline;" />
+        <button class="btn btn-primary" (click)="onSearch(title.value)">جستجو</button>
+      </div>
+      <div class="col-md-12 col-sm-12" *ngIf="categories != undefined">
+        <input type="text" placeholder="عنوان والد" class="form-control mb-3" #parentTitle value="" style="min-width: 200px; max-width: 400px;display: inline;" />
+        <button class="btn btn-primary" (click)="onSearchChild(parentTitle.value)">جستجو</button>
+      </div>
+      <div class="col-12">
+
+        <a class="btn btn-info mb-3 text-white" [routerLink]="['/categories/add']">
+          <i class="fa fa-plus mr-1"></i>جدید
+        </a>
+
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-6 mb-2" *ngIf="categories != undefined">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+      <div class="col-12" *ngIf="categories != undefined">
+        <table class="table table-responsive-sm table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center">ردیف</th>
+              <th class="text-center">نام دسته</th>
+              <th class="text-center">مسیر دسته</th>
+              <th class="text-center">ترتیب</th>
+              <th class="text-center">عکس</th>
+              <th class="text-center"></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="categories" let-i="index">
+              <tr>
+                <td class="text-center">{{row+i}}</td>
+                <td class="text-center">
+                  <span *ngIf="item.title != undefined">
+                    {{item.title}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.title != undefined">
+                    {{item.path}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  {{item.order}}
+                </td>
+                <td class="text-center">
+                  <img *ngIf="item.icon != undefined"
+                       src="/upload/category/{{item.id}}/{{item.thumbnail}}" />
+                </td>
+                <td class="text-center">
+                  <a class="btn btn-warning" *ngIf="item.title !='ریشه'" [routerLink]="['/categories/edit', item.id]">
+                    ویرایش
+                  </a>
+                  <a class="btn btn-danger" (click)="onDelete(item.id,i)" *ngIf="item.title !='ریشه'">
+                    حذف
+                  </a>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+        <!-- paging -->
+        <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id"
+                                 [maxSize]="maxSize"
+                                 [directionLinks]="directionLinks"
+                                 [autoHide]="autoHide"
+                                 [responsive]="responsive"
+                                 [previousLabel]="labels.previousLabel"
+                                 [nextLabel]="labels.nextLabel"
+                                 [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                 (pageChange)="onPageChange($event)">
+
+            </pagination-controls>
+          </div>
+        </div>
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading"
+                     [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

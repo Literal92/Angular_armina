@@ -1,0 +1,53 @@
+<notifier-container></notifier-container>
+<div class="card">
+  <h4 class="card-header"> افزودن کاربر سیستمی </h4>
+
+  <div class="row loading" *ngIf="addForm">
+    <form class="col-12" (ngSubmit)="onSubmit(addForm.value)"
+          [formGroup]="addForm"
+          style="padding:20px"
+          novalidate>
+      <div class="col-md-6">
+        <label>نام کاربری-موبایل</label>
+        <span class="text-danger">*</span>
+        <div class="">
+          <input formControlName="userName" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>پسورد</label>
+        <span class="text-danger">*</span>
+        <div class="">
+          <input type="password" formControlName="password" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label>
+
+          نام
+
+        </label>
+        <span class="text-danger">*</span>
+        <div class="">
+          <input formControlName="firstName" class="form-control" />
+        </div>
+      </div>
+      
+
+      <div class="col-md-6">
+        <label>تلفن</label>
+        <div class="">
+          <input formControlName="phoneNumber" class="form-control" />
+        </div>
+      </div>
+    
+      <div class="col-12">
+        <button type="submit" class="btn btn-success text-white mt-4" [disabled]="!addForm.valid">ثبت</button>
+      </div>
+
+    </form>
+  </div>
+  <!-- loading -->
+  <!-- add calss loading to custome dive -->
+  <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+</div>

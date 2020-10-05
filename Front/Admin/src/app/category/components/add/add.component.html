@@ -1,0 +1,45 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">ثبت دسته بندی</h4>
+
+  <div class="row container mt-4 mb-4" *ngIf="addForm">
+    <form (ngSubmit)="onSubmit(addForm.value)" class="form-horizontal"
+          [formGroup]="addForm"
+          style="padding:20px"
+          novalidate>
+      <div class="form-group row">
+        <div class="col-sm-12 col-xs-12 mt-3">
+          مسیر دسته:
+          <select class="form-control" formControlName="parentId">
+            <option *ngFor="let item of categories" [value]="item.id">{{item.path}}</option>
+          </select>
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          عنوان:
+          <span class="font-xs text-danger">الزامی </span>
+          <input type="text" class="form-control" placeholder="عنوان" value="" formControlName="title" />
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          ترتیب:
+          <input type="number" class="form-control" placeholder="ترتیب" formControlName="order" />
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          ایکون:
+          <input type="file" formControlName="icon" accept="image/png,image/gif,image/jpeg,image/jpg"
+                 #icon (change)="uploadIcon(icon.files)" />
+                 <span *ngIf="errorFile" class="text-danger"> {{errorFile}}</span>      
+
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-success text-white mt-4" [disabled]="!addForm.valid">ثبت</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+

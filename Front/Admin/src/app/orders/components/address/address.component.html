@@ -1,0 +1,131 @@
+<notifier-container></notifier-container>
+
+<div class="card ordersc">
+  <div class="card-header">لیست ادرس سفارشات بسته بندی نشده</div>
+
+  <div class="card-body loading p-0" *ngIf="list != undefined">
+
+
+    <div class="row p-0">
+
+      <div class="col-12">
+        <table class="table table-responsive-sm table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center">
+                #
+              </th>
+              <th class="text-center">
+                ادرس
+              </th>
+              <th class="text-center">محصول</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="list" let-i="index">
+              <tr style="border-bottom:1.5px solid #000">
+                <td>
+                  {{item.id}}
+
+                </td>
+                <td class="text-center w-50">
+                  <div style="font-size:17px">
+                    {{item.reciverAddress}}
+                    <span *ngIf="item.reciverName != undefined&&item.reciverName !='.'&&item.reciverName !='0'">
+                      گیرنده:
+                      {{item.reciverName}}
+                    </span>
+                    <span *ngIf="item.reciverMobile != undefined&&item.reciverMobile !='.'&&item.reciverMobile !='0' &&
+                          item.reciverMobile !='9981415928' &&
+                           item.reciverMobile !='9018091511' &&item.reciverMobile !='09018091511' &&
+                          item.reciverMobile !='9372197297'&&item.reciverMobile !='09372197297' &&
+                          item.reciverMobile !='0SuperAdmin' &&
+
+                          item.reciverMobile !='09981415928'">
+                      تماس گیرنده:
+                      {{item.reciverMobile}}
+                    </span>
+
+                  </div>
+                </td>
+
+                <td class="text-center w-50 pt-0 pb-0" style="border-bottom:1px solid #000">
+
+                  <div *ngIf="
+                          item.reciverMobile =='9981415928' || item.reciverMobile =='9018091511' ||item.reciverMobile =='09018091511' || item.reciverMobile =='9372197297' ||item.reciverMobile =='09372197297' ||
+                          item.reciverMobile =='09981415928'">
+                  ثبت توسط ادمین
+                  </div>
+
+                  <div>
+                    {{item.id}}
+                  </div>
+                  <div class="row" *ngIf="item.orderProducts != undefined && item.orderProducts.length>0">
+                    <ng-template ngFor let-temp [ngForOf]="item.orderProducts" let-i="index">
+                      
+                      <div class="col-4 p-0">
+                        <span class="p-0" *ngIf="temp.product.code != undefined">{{temp.product.code}}
+                        -
+                        </span>
+
+                        {{temp.product.title}}
+                      </div>
+                      <div class="col-2 p-0">{{temp.productOption.title  | slice:0:6}}</div>
+                      <div class="col-2 p-0">{{temp.optionColor.title}}</div>
+                      <div class="col-1 p-0">
+                        <label class="pt-0" style="">
+                          {{temp.count}}
+                        </label>
+                      </div>
+
+                      <div class="border-danger col-12" style="border: .5px solid;" *ngIf="i != item.orderProducts.length-1">
+                      </div>
+                    </ng-template>
+                  </div>
+                </td>
+                <!--<td class="text-center">
+
+                  <div *ngIf="item.orderProducts != undefined && item.orderProducts.length>0">
+                    <ng-template ngFor let-temp [ngForOf]="item.orderProducts" let-i="index">
+
+
+                      <div >{{temp.product.title}}</div>
+                      <div>{{temp.productOption.title |slice:0:5}}</div>
+                      <div >{{temp.optionColor.title}}</div>
+                      <div >
+                        <label class="pt-1" style="width: 32px !important;
+                                border-radius: 100%;
+                                height: 32px;
+                                border: 1px solid green;">
+                          {{temp.count}}
+                        </label>
+                      </div>
+
+                      <div class="border-danger mb-1 mt-1" style="border: 1px solid;" *ngIf="i != item.orderProducts.length-1">
+                      </div>
+                    </ng-template>
+                  </div>
+                </td>-->
+
+
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!--<button class="btn btn-success fabIcon" [routerLink]="['/product/add']">
+  +
+</button>-->

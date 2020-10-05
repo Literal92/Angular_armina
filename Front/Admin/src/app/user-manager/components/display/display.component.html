@@ -1,0 +1,284 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">مدیریت کاربران </h4>
+
+  <div class="card-body loading">
+    <div *ngIf="searchForm">
+      <form (ngSubmit)="onSubmit(searchForm.value)"
+            [formGroup]="searchForm"
+            style="padding:20px"
+            novalidate>
+
+        <div class="row">
+          <!-- reserve id -->
+          <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+              <label> نام کاربری</label>
+              <div class="">
+                <input type="text" class="form-control" formControlName="userName" placeholder="نام کاربری" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+              <label> نام و نام خانوادگی</label>
+              <div class="">
+                <input type="text" class="form-control" formControlName="displayName" placeholder="نام و نام خانوادگی" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+              <label>موبایل</label>
+              <div class="">
+                <input type="text" class="form-control" formControlName="mobile" placeholder="موبایل" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <button type="submit" class="btn btn-success">
+              <i class="fa fa-search"></i>
+              جستجو
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row" [ngClass]="{'hidden':showParent===false}">
+      <div class="col-12 mt-2">
+        <!---->
+        <a class="btn btn-info mb-3 text-white" [routerLink]="['/usermanager/add']">
+          <i class="fa fa-plus mr-1"></i>جدید
+        </a>
+
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-6 mb-2">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <table class="table table-responsive-sm table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center">ردیف</th>
+              <th class="text-center">نام کاربری</th>
+              <th class="text-center">نام و نام خانوادگی</th>
+              <td>
+                کد
+              </td>
+              <th class="text-center">موبایل</th>
+              <th class="text-center">سفارشات</th>
+              <th class="text-center">فروشنده/مشتری</th>
+              <th class="text-center">فعال/غیرفعال</th>
+              <th class="text-center">اعمال نقش</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="users" let-i="index">
+              <tr>
+                <td class="text-center">{{row+i}}</td>
+                <td class="text-center">
+                  <span *ngIf="item.userName != undefined">
+                    {{item.userName}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.displayName != undefined">
+                    {{item.displayName}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.verifyCode != undefined">
+                    {{item.verifyCode}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.mobile != undefined">
+                    {{item.mobile}}
+                  </span>
+                  <span *ngIf="item.phoneNumber != undefined">
+                    {{item.phoneNumber}}
+                  </span>
+                </td>
+                
+                <td class="text-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" (click)="onReserve(item.id)">
+                    نمایش
+                  </button>
+                </td>
+
+
+                <td class="text-center">
+
+                  <button class="btn btn-danger" *ngIf="item.userType==1" (click)="chType(item.userType, item)">فروشنده شود</button>
+                  <button class="btn btn-success" *ngIf="item.userType==0" (click)="chType(item.userType, item)">مشتری شود</button>
+                </td>
+
+
+                <td class="text-center">
+                  <button class="btn btn-danger" *ngIf="item.isActive==true" (click)="chActive(item.isActive, item)">غیر فعال شود</button>
+                  <button class="btn btn-success" *ngIf="item.isActive==false" (click)="chActive(item.isActive, item)">فعال شود</button>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-danger" (click)="onRole(item.id,i)"><i class="fa fa-lock font-2xl"></i> </button>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-success" [routerLink]="['/usermanager/edit',item.id]">ویرایش</button>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"> رزروها (۱۰ مورد آخر)</h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-borderless table-responsive-xl table-striped table-bordered table-responsive-sm">
+                  <thead>
+                    <tr>
+                      <th class="text-center">ردیف</th>
+                      <th class="text-center">شماره رزرو</th>
+                      <th class="text-center">تاریخ رزرو</th>
+                      <th class="text-center">خدمت</th>
+
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="reserves != undefined">
+                    <ng-template ngFor let-itemD [ngForOf]="reserves" let-i="index">
+                      <tr>
+                        <td class="text-center">{{i+1}}</td>
+                        <td class="text-center">{{itemD.id}}</td>
+                        <td class="text-center">{{itemD.dateTime | momentJalaali:'jYYYY/jMM/jDD' }}</td>
+                        <td class="text-center">{{itemD.provider}}</td>
+                      </tr>
+                    </ng-template>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">متوجه شدم!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- paging -->
+        <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id"
+                                 [maxSize]="maxSize"
+                                 [directionLinks]="directionLinks"
+                                 [autoHide]="autoHide"
+                                 [responsive]="responsive"
+                                 [previousLabel]="labels.previousLabel"
+                                 [nextLabel]="labels.nextLabel"
+                                 [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                 (pageChange)="onPageChange($event)"
+                                 >
+
+            </pagination-controls>
+          </div>
+        </div>
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading"
+                     [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+    
+
+  </div>
+</div>
+
+<!-- Modal permission -->
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row" *ngIf="permissions!=undefined">
+        <div class="col-sm-12">
+          <button class="btn btn-success btn-lg" (click)="onSavePermit()">ثبت</button>
+        </div>
+        <ng-template ngFor let-organ [ngForOf]="permissions" let-i="index">
+
+          <div class="col-sm-12 col-xs-12 mb-2 mt-4" *ngIf="(i>0 && organ.id != permissions[i-1].id) || i===0 ">
+            <input type="checkbox" class="mr-2" name="claim-{{i}}"
+                   [checked]="organ |checkClaim : userId : claimExist: 'organization'"
+                   #permitOrgan (change)="onChPermit(permitOrgan.checked,organ,i)" />
+            <strong>{{organ.title}}</strong>
+            <!--<div class="row col-xs-12 p-1 mt-2" *ngIf="organ.providers.length>0" style="border:1px solid #cacaca">
+
+              <ng-template ngFor let-provider [ngForOf]="organ.providers" let-j="index">
+                <div class="col-3">
+                  <input type="checkbox" name="claim-{{i}}{{j}}"
+                         [checked]="provider |checkClaim : userId : claimExist : 'provider' " class="mr-2"
+                         #permit (change)="onChPermit(permit.checked,provider,i,j)" />
+
+                  {{provider.title}}
+                </div>
+
+              </ng-template>
+            </div>-->
+
+          </div>
+        </ng-template>
+        <div class="col-sm-12 mt-2">
+          <button class="btn btn-success btn-lg" (click)="onSavePermit()">ثبت</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal Role -->
+<div id="modalRole" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">نقش ها</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row" *ngIf="roles!=undefined">
+
+        <ng-template ngFor let-item [ngForOf]="roles" let-i="index">
+
+          <div class="col-sm-6 col-xs-12 p-1 mt-2" style="border:1px solid #cacaca">
+            <input type="checkbox" name="role-{{i}}"
+                   [checked]="item.id |checkRole : userRole"
+                   #role (change)="onChRole(role.checked,item,i)" />
+            {{item.description}}
+          </div>
+        </ng-template>
+        <div class="col-sm-12 mt-2">
+          <button class="btn btn-success btn-lg" (click)="onSaveRole()">ثبت</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

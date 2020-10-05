@@ -1,0 +1,482 @@
+<notifier-container></notifier-container>
+
+<div class="card ordersc">
+  <div class="card-header">مدیریت محصولات</div>
+
+  <div class="card-body loading" *ngIf="products != undefined">
+
+    <form (ngSubmit)="onSubmit(searchForm.value)"
+          class="form-horizontal" [formGroup]="searchForm" style="padding:20px" novalidate>
+      <div class="row">
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            شماره مشتری
+          </label>
+          <input type="text" class="form-control" placeholder="شماره مشتری " value="" formControlName="username" />
+        </div>
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            نام گیرنده
+          </label>
+          <input type="text" class="form-control" placeholder="نام گیرنده " value="" formControlName="reciverName" />
+        </div>
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            شماره گیرنده
+          </label>
+          <input type="text" class="form-control" placeholder="شماره گیرنده " value="" formControlName="reciverMobile" />
+        </div>
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            نام فرستنده
+          </label>
+          <input type="text" class="form-control" placeholder="نام فرستنده " value="" formControlName="senderName" />
+        </div>
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            شماره فرستنده
+          </label>
+          <input type="text" class="form-control" placeholder="شماره فرستنده  " value="" formControlName="senderMobile" />
+        </div>
+
+
+        <!-- fromDate -->
+        <div class="col-md-2 col-sm-6">
+
+          <div class="form-group">
+            <label> تاریخ</label>
+            <div class="">
+              <dp-date-picker dir="ltr"
+                              formControlName="from"
+                              mode="day"
+                              theme="dp-material"
+                              [config]="datePickerConfig">
+              </dp-date-picker>
+            </div>
+          </div>
+        </div>
+
+        <!-- ToDate -->
+        <div class="col-md-2 col-sm-6">
+          <div class="form-group">
+            <label>تا تاریخ</label>
+            <div>
+              <dp-date-picker dir="ltr"
+                              formControlName="to"
+                              mode="day"
+                              theme="dp-material"
+                              [config]="datePickerConfig">
+              </dp-date-picker>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>
+              نام محصول: با لایک گرفته میشه
+            </label>
+            <input type="text" class="form-control" placeholder="نام محصول " value="" formControlName="productName" />
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+
+            <label>
+              وضعیت پرداخت
+            </label>
+
+            <select class="form-control" formControlName="orderType">
+              <option *ngFor="let item of orderType; let i=index" [value]="item.value">
+                {{item.title}}
+              </option>
+            </select>
+
+          </div>
+        </div>
+
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>
+              وضعیت ارسال
+            </label>
+
+            <select class="form-control" formControlName="orderSendType">
+              <option *ngFor="let item of orderSendType; let i=index" [value]="item.value">
+                {{item.title}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label>
+              شناسه سفارش
+            </label>
+            <input type="number" class="form-control" placeholder="شناسه سفارش " value="" formControlName="id" />
+          </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            آدرس
+          </label>
+          <input type="text" class="form-control" placeholder="آدرس  " value="" formControlName="address" />
+        </div>
+
+
+        <div class="col-12 pr-0 col-lg-3">
+          <label>
+            &nbsp;
+          </label>
+          <div>
+            <button type="submit" class="btn btn-success text-white w-50">جستجو</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+
+    <div class="row p-0">
+      <div class="col-md-2 col-sm-3 col-xs-6 mb-2">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <table class="table table-responsive-sm table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class=" p-1">
+                #
+              </th>
+              <th class="text-center p-1">  ارسال</th>
+              <th class="text-center p-1">   محصولات</th>
+
+              <th class="text-center p-1">آدرس گیرنده</th>
+              <th class="text-center p-1">تاریخ  </th>
+
+              <th class="text-center p-1">کد</th>
+
+              <th class="text-center p-1">نام کاربری </th>
+
+
+
+              <th class="text-center p-1">قیمت کل</th>
+              <th class="text-center p-1"> تخفیف</th>
+              <th class="text-center p-1"> پرداختی</th>
+
+              <th class="text-center p-1">  پرداخت</th>
+
+              <th class="text-center p-1">تایید مالی</th>
+
+
+              <th class="text-center">رزرو شده</th>
+              <th class="text-center">تا کی رزرو شده</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="products" let-i="index">
+              <tr>
+
+                <td class="text-center p-1">{{row+i}}</td>
+                <td class="text-center p-1">
+                  <div *ngIf="item.orderType!= undefined&&item.orderType==0">
+                    پرداخت
+                    نشده
+                  </div>
+                  <div *ngIf="item.orderType!= undefined&&item.orderType==1">
+                    <button class="btn btn-danger" [hasAuthUserViewPermission]="['orderAdmin']" *ngIf="item.orderSendType==0" (click)="chSendType(item)">پاکت نشده</button>
+                    <button class="btn btn-success" [hasAuthUserViewPermission]="['orderAdmin']" *ngIf="item.orderSendType==1" (click)="chSendType(item)">پاکت شده </button>
+                  </div>
+
+                </td>
+
+                <td class=" p-1">
+                  <a (click)="onShowProduct(item)">
+                    محصولات
+                  </a>
+                </td>
+
+
+
+                <td class="text-center p-1">
+                  <span *ngIf="item.reciverAddress != undefined">
+                    {{item.reciverAddress}}
+                  </span>
+                  <span *ngIf="item.reciverName != undefined&&item.reciverName !='.'&&item.reciverName !='0'">
+                    گیرنده:
+                    {{item.reciverName}}
+                  </span>
+                  <span *ngIf="item.reciverMobile != undefined&&item.reciverMobile !='.'&&item.reciverMobile !='0'
+
+                      &&item.reciverName !='9981415928'   &&item.reciverName !='9018091511' &&item.reciverName !='09018091511' &&item.reciverName !='9372197297' &&item.reciverName !='09372197297'
+                         &&item.reciverName !='09981415928'  &&item.reciverName !='0SuperAdmin'
+                        ">
+                    تماس گیرنده
+
+
+                    {{item.reciverMobile}}
+                  </span>
+                  <span *ngIf="item.senderName != undefined&&item.senderName !='.'&&item.senderName !='0'">
+                    نام فرستنده
+                    {{item.senderName}}
+                  </span>
+                  <span *ngIf="item.senderMobile != undefined&&item.senderMobile !='.'&&item.senderMobile !='0'">
+                    تماس فرستنده
+                    {{item.senderMobile}}
+                  </span>
+                  <br />
+                  <button class="btn btn-success" [hasAuthUserViewPermission]="['admin']" type="button" (click)="onChAddress(item.id)">ویرایش</button>
+
+                  <div *ngIf="item.picture != undefined">
+                    <img src="/upload/order/{{item.picture}}" (click)="onShowShot(item.picture)" style="width:80px" />
+
+                  </div>
+                </td>
+
+                
+                <td class="text-center  p-1">
+                  <span *ngIf="item.paidFaDateTime != undefined">
+                    {{item.paidFaDateTime}}
+                  </span>
+                </td>
+                <td class="text-center p-1">
+                  <span *ngIf="item.id != undefined">
+                    {{item.id}}
+                  </span>
+                </td>
+                <td class="text-center p-1">
+                  <span *ngIf="item.user != undefined">
+                    {{item.user.userName}}
+                  </span>
+                </td>
+
+
+                <td class="text-center p-1">
+                  <span *ngIf="item.totalPrice!= undefined">
+                    {{item.totalPrice+11000 | toPrice}}
+                  </span>
+                </td>
+                <td class="text-center p-1">
+                  <span *ngIf="item.discountPrice!= undefined">
+                    {{item.discountPrice | toPrice}}
+                  </span>
+                </td>
+                <td class="text-center p-1">
+                  <span *ngIf="item.totalWithDiscountPrice!= undefined">
+                    {{item.totalWithDiscountPrice+11000 | toPrice}}
+                  </span>
+                </td>
+                <td class="text-center p-1">
+                  <span *ngIf="item.orderType!= undefined&&item.orderType==1">
+                    پرداخت شده
+                  </span>
+                  <span *ngIf="item.orderType!= undefined&&item.orderType==0">
+                    نشده
+
+
+                    <a (click)="pay(item)" [hasAuthUserViewPermission]="['admin']" class="btn btn-success">
+                      تکمیل
+                      خرید
+                    </a>
+                  </span>
+                </td>
+
+                <td>
+                  <button class="btn btn-success"[hasAuthUserViewPermission]="['accountantAdmin']" *ngIf="!item.acceptPayment" (click)="onAcceptPayment(item.id, i)">تایید</button>
+                  <button class="btn btn-danger" [hasAuthUserViewPermission]="['accountantAdmin']" *ngIf="item.acceptPayment" (click)="onDisacceptPayment(item.id, i)">عدم تایید</button>
+                </td>
+
+                <td class="text-center p-1">
+                  <span *ngIf="item.isReserved != undefined && item.isReserved===true" class="text-success">
+                    <i class="fa fa-2x fa-check-circle-o"></i>
+                  </span>
+
+                  <span *ngIf="item.isReserved != undefined && item.isReserved===false" class="text-danger">
+                    <i class="fa fa-2x fa-remove"></i>
+                  </span>
+                </td>
+                <td class="text-center p-1">
+                  <span *ngIf="reserveTo != undefined">
+                    {{item.reserveToFa}}
+                  </span>
+                </td>
+
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+        <!-- paging -->
+        <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
+                                 [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
+                                 [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)">
+
+            </pagination-controls>
+          </div>
+        </div>
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- Modal product -->
+<div id="modalshot" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row" *ngIf="ordershot!=undefined">
+       <img src="/upload/order/{{ordershot}}" style="width:100%"/>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- Modal product -->
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row" *ngIf="products!=undefined">
+        <table class="table text-center table-responsive">
+          <tr>
+            <th>
+              نام محصول
+            </th>
+            <th>
+              تعداد
+            </th>
+            <th>
+              سایز
+            </th>
+            <th>
+              رنگ
+            </th>
+            <th>
+              قیمت واحد
+            </th>
+            <th>
+              قیمت کل
+            </th>
+            <th></th>
+          </tr>
+          <ng-template ngFor let-product [ngForOf]="orderProducts" let-i="index">
+            <tr>
+              <td>
+                {{product.product.title}}
+              </td>
+              <td>
+                {{product.count}}
+              </td>
+              <td>
+                {{product.productOption.title}}
+              </td>
+              <td>
+                {{product.optionColor.title}}
+              </td>
+              <td>
+                {{product.unitPrice}}
+              </td>
+              <td>
+                {{product.totalPrice}}
+              </td>
+              <td>
+                <button class="btn btn-danger text-white"><i class="fa fa-remove" (click)="onDeletePrd(product.id, i, product.totalPrice, product.orderId)"></i></button>
+              </td>
+            </tr>
+
+          </ng-template>
+        </table>
+        <div class="address">
+          {{selectedAddress}}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal adrress -->
+<!-- if form -->
+<div id="modalAddress" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row" *ngIf="addressForm">
+        <form (ngSubmit)="onEditAdress(addressForm.value)"
+              class="form-horizontal" [formGroup]="addressForm" style="padding:20px" novalidate>
+          <div class="row">
+            <div class="col-12">
+              <label>
+                نام فرستنده
+              </label>
+              <input type="text" class="form-control" value="" formControlName="senderName" />
+            </div>
+            <div class="col-12">
+              <label>
+                نام گیرنده
+              </label>
+              <input type="text" class="form-control" value="" formControlName="reciverName" />
+            </div>
+            <div class="col-12">
+              <label>
+                موبایل فرستنده
+              </label>
+              <input type="text" class="form-control" value="" formControlName="senderMobile" />
+            </div>
+            <div class="col-12">
+              <label>
+                موبایل گیرنده
+              </label>
+              <input type="text" class="form-control" value="" formControlName="reciverMobile" />
+            </div>
+            <div class="col-12">
+              <label>
+                ادرس گیرنده
+              </label>
+              <textarea rows="5" type="text" class="form-control" value="" formControlName="reciverAddress"></textarea>
+            </div>
+            <div class="col-12">
+              <div>
+                <button type="submit" class="btn btn-success text-white w-50">ثبت</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

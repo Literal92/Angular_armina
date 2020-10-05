@@ -1,0 +1,33 @@
+
+.main{
+    // background: url(../../assets/img/bg-footer.png) top center ;
+    background-size: cover;
+    // background:#333 !important;
+    min-height: calc(100vh - 54px);
+    position: relative;
+    padding-top: 145px;
+    padding-right: 30px;
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    color: #fff
+  }
+  .fontLalezar{
+      font-family: Lalezar;
+      font-weight: 500;
+      color: #333;
+  }
+  .f-40{
+      font-size: 40px
+  }
+ .font-red{
+     color: #f53a47 !important
+ }
+ .box{
+    text-align: center;
+    margin-top: -80px;
+ }

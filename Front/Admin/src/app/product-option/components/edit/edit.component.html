@@ -1,0 +1,211 @@
+<notifier-container></notifier-container>
+<div class="card">
+  <h6 class="card-header">
+    ویرایش فیلد محصول
+    <strong *ngIf="product != undefined">
+      {{product.title}}
+    </strong>
+  </h6>
+
+  <div class="card-body" *ngIf="fields.length>0">
+    <div class="row" *ngIf="editForm">
+      <form class="col-12" (ngSubmit)="onSubmit(editForm.value)"
+            [formGroup]="editForm"
+            style="padding:20px"
+            novalidate>
+
+        <!-- title-->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              نام فیلد
+            </label>
+            <select class="form-control" formControlName="fieldId" *ngIf="fields != undefined">
+              <option *ngFor="let item of fields ; let i=index" [value]="item.id">{{item.title}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              عنوان
+            </label>
+            <input type="text" class="form-control" value="" formControlName="title" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              ترتیب
+            </label>
+            <input type="number" class="form-control" value="" formControlName="order" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              تعداد
+            </label>
+            <input type="number" class="form-control" value="" formControlName="count" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              قیمت
+            </label>
+            <input type="number" class="form-control" value="" formControlName="price" />
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="button" class="btn btn-info text-white mb-3" (click)="onAddOption()"> افزودن ایتم</button>
+          <div class="col-12">
+            <table class="table table-responsive-sm table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">ردیف</th>
+                  <th class="text-center">عنوان</th>
+                  <th class="text-center">ترتیب</th>
+                  <th class="text-center">قیمت</th>
+                  <th class="text-center">قیمت همکار</th>
+                  <th class="text-center">کدرنگ</th>
+                  <th class="text-center">تعداد</th>
+                  <th class="text-center"></th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <ng-template ngFor let-item [ngForOf]="colors" let-i="index">
+                  <tr>
+                    <td class="text-center">{{i+1}}</td>
+                    <td class="text-center">
+                      <span *ngIf="item.title != undefined">
+                        {{item.title}}
+                      </span>
+                    </td>
+
+                    <td class="text-center">
+                      <span *ngIf="item.order">
+                        {{item.order}}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span *ngIf="item.price">
+                        {{item.price | toPrice}}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span *ngIf="item.resellerPrice">
+                        {{item.resellerPrice | toPrice}}
+                      </span>
+                    </td>
+                    <td class="text-center dir-ltr">
+                      <span *ngIf="item.code">
+                        {{item.code}}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span *ngIf="item.count">
+                        {{item.count}}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <button class="btn btn-danger"
+                              title="حذف" (click)="onRemove(i)">
+                        <i class="fa fa-remove"></i>
+                      </button>
+                      <button type="button" class="btn btn-success"
+                              title="ویرایش" (click)="onEditItem(item)">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-success text-white mt-4" [disabled]="!editForm.valid">ثبت</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal color -->
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>افزودن ایتم</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row" *ngIf="colorForm!=undefined">
+        <form class="col-12" (ngSubmit)="onColor(colorForm.value)"
+              [formGroup]="colorForm"
+              style="padding:20px"
+              novalidate>
+          <!-- title-->
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>
+                عنوان
+              </label>
+              <input type="text" class="form-control" formControlName="title">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label style="min-width:100px !important">
+                قیمت
+              </label>
+              <input type="number" class="form-control" formControlName="price">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label style="min-width:100px !important">
+                قیمت همکار
+              </label>
+              <input type="number" class="form-control" formControlName="resellerPrice">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>
+                تعداد
+              </label>
+              <input type="number" class="form-control" value="" formControlName="count" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>
+                کدرنگ
+              </label>
+              <input type="text" class="form-control dir-ltr" value="" formControlName="code" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>
+                ترتیب
+              </label>
+              <input type="number" class="form-control" value="" formControlName="order" />
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button type="submit" class="btn btn-success text-white mt-4" [disabled]="!colorForm.valid">ثبت</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

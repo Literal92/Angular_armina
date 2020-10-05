@@ -1,0 +1,186 @@
+
+
+  .card-dark{
+    background:  rgb(55,55,55);
+    border-radius: 0 0 20px 20px;
+    padding: 30px;
+    color: #f5f5f5;
+    min-height: 450px;
+    display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      align-content: stretch;
+  }
+  .btn{
+    min-width: 100px;
+  }
+  .tab{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: stretch;
+      align-content: flex-end;
+  }
+
+  .tab-button{
+    background: rgb(32,32,32);
+    padding: 20px;
+    width: 49.5%;
+    border-radius: 20px 20px 0 0;
+    color: #f5f5f5;
+    text-align: center;
+  }
+
+  .active{
+    background: rgb(55,55,55);
+    padding: 20px;
+  }
+
+  .center{
+    text-align: center;
+  }
+  .flex-center{
+    display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: stretch;
+      align-content: stretch;
+  }
+  .text-right{
+    text-align: right;
+  }
+
+  .text-left{
+    text-align: left;
+  }
+
+  .input-game{
+    overflow: visible;
+    background: rgba(55, 55, 55, 1);
+    border: 2px #f5f5f5 solid;
+    padding: 5px 15px;
+    border-radius: 50px;
+    color: #f5f5f5;
+  }
+
+  .input-token{
+    overflow: visible;
+    background: #373737;
+    padding: 10px 0px;
+    border-radius: 0;
+    color: #f5f5f5;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #fff;
+    margin: 4px;
+    width: 50px;
+  }
+
+  .form-group{
+    margin-bottom: 10px;
+  }
+
+  .groupInput{
+    display: flex;
+      flex-direction: row-reverse;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      align-items: stretch;
+      align-content: stretch;
+  }
+
+
+  .text-warning{
+    color: rgb(236, 195, 89)
+  }
+
+  a{
+    text-decoration: none;
+    color: rgb(236, 195, 89);
+  }
+  .form-check{
+    padding: 0px 5px;
+  }
+
+  .text-danger{
+    color: #ff7f7f;
+    font-size: 12px;
+    margin: 10px;
+  }
+
+
+  a:hover{
+    text-decoration: none;
+  }
+
+  .label-input{
+    color: #a2a2a2;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .location{
+    background: #edc458;
+    border-radius: 10px;
+    width: 150px;
+    font-size: 13px;
+    color: #333;
+    padding: 3px;
+    position: absolute;
+    left: 34px;
+    top: 46px;
+  }
+
+  .file{
+    background: #edc458;
+    padding: 5px 25px;
+    border-radius: 10px;
+    color: #333;
+  }
+
+  .hidden{
+    display: none;
+  }
+
+
+
+  .modal{
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    align-content: center;
+    background: #15151569;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+  }
+
+  .modal-dialog{
+    width: 675px;
+    max-width: unset;
+    min-height: 500px;
+    background: #1f1f1f;
+    border-radius: 20px;
+    padding: 20px;
+    color: #f5f5f5;
+    border: 2px solid #3c3c3c;
+  }
+
+.modal-content{
+  background: #1f1f1f
+}
+
+
+:host ::ng-deep .dp-material{
+  width: 100% !important;
+}
+

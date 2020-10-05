@@ -1,0 +1,67 @@
+﻿@model PaymentResultViewModel
+@{
+    ViewData["Title"] = "نتیجه تراکنش بانکی";
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/assets/style/custom.css" rel="stylesheet" />
+    <link href="~/assets/style/bootstrap-grid.min.css" rel="stylesheet" />
+</head>
+<body style="display: flex;flex-direction: column;flex-wrap: wrap;justify-content: center;align-items: center;align-content: center;background: #ebebeb;">
+    <div class="col-md-8" style="
+        background: #fff;
+        text-align: center;
+        padding: 25px;
+        border-radius: 20px;
+        min-height: 200px;
+        box-shadow: 0 4px 4px -2px #aea9a9;
+        direction: rtl;">
+
+        <h2 style="
+            padding: 10px;
+            border-radius: 15px;
+            color: #6c6c6c;
+            margin-top: -5px;
+            ">
+            <strong>پرداخت بانکی</strong>
+        </h2>
+        <br>
+        <br>
+        <div>
+            @if (!Model.Success)
+            {
+                <strong style="color:#a60433">
+                    @(Model.Message)
+                </strong>
+            }
+            else
+            {
+                <strong style="color:#00ff21">
+                    @(Model.Message)
+                </strong>
+            }
+        </div>
+        @if (!string.IsNullOrEmpty(Model.TransactionCode))
+        {
+            <div>
+                <strong>کد رهگیری شما: </strong> @(Model.TransactionCode)
+            </div>
+            <div>
+                <strong>کد  سفارش: </strong> @(Model.Id)
+            </div>
+        }
+        <br>
+        <br>
+        <div>
+            <a class="col-md-4" href="/order/list" style="background: linear-gradient(to right,#0ba604 ,#39ef42);border: none;padding: 10px 30px;font-family: inherit;color: #fff;border-radius: 15px;width: 100%;">
+                بازگشت به سایت
+            </a>
+        </div>
+    </div>
+</body>
+</html>

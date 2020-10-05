@@ -1,0 +1,141 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <div class="card-header">مدیریت محصولات</div>
+
+  <div class="card-body loading" *ngIf="products != undefined">
+
+    <form (ngSubmit)="onSubmit(searchForm.value)"
+     class="form-horizontal" [formGroup]="searchForm" style="padding:20px" novalidate>
+      <div class="row">
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            نام محصول
+          </label>
+          <input type="text" class="form-control" placeholder="نام محصول" value="" formControlName="title" />
+        </div>
+        <div class="col-sm-3 col-xs-12">
+          <label>
+            کد محصول
+          </label>
+          <input type="text" class="form-control" placeholder="کد محصول" value="" formControlName="code" />
+        </div>
+        <div class="col-3 pr-0">
+          <label>
+            &nbsp;
+          </label>
+          <div>
+            <button type="submit" class="btn btn-success text-white w-50">جستجو</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+
+    <div class="row">
+      <div class="col-md-2 col-sm-3 col-xs-6 mb-2">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <table class="table table-responsive-sm table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center">ردیف</th>
+              <th class="text-center">نام</th>
+              <th class="text-center">کد محصول</th>
+
+              <th class="text-center">عکس</th>
+              <th class="text-center">قیمت</th>
+              <th class="text-center">تعداد</th>
+              <th class="text-center">فیلد ها</th>
+              <th class="text-center"> وضعیت</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="products" let-i="index">
+              <tr>
+                <td class="text-center">{{row+i}}</td>
+                <td class="text-center">
+                  <span *ngIf="item.title != undefined">
+                    {{item.title}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.code != undefined">
+                    {{item.code}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.thumbnail != undefined">
+                    <img src="/upload/product/{{item.id}}/{{item.thumbnail}}">
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.price!= undefined">
+                    {{item.price | toPrice}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span *ngIf="item.price!= undefined">
+                    {{item.count}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <a class="btn btn-info text-white" [routerLink]="['/product-option/display/',item.id]">گزینه ها</a>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-danger" *ngIf="item.isPublish==true" (click)="chActive(item.isPublish, item)">غیر فعال شود</button>
+                  <button class="btn btn-success" *ngIf="item.isPublish==false" (click)="chActive(item.isPublish, item)">فعال شود</button>
+                </td>
+                <td class="text-center">
+                  <a class="btn btn-success" [routerLink]="['/product/edit/',item.id]">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <button class="btn btn-danger" (click)="onDel(item.id, i)">
+                    <i class="fa fa-remove"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+        <!-- paging -->
+        <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
+                                 [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
+                                 [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)">
+
+            </pagination-controls>
+          </div>
+        </div>
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading" [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<button class="btn btn-success fabIcon" [routerLink]="['/product/add']">
+  +
+</button>

@@ -1,0 +1,21 @@
+
+<div class="container">
+
+  <div class="row">
+    <div class="bg-white col-sm-12 col-md-10 offset-2 mt-5">
+      <h1 class="text-danger">
+        <i class="fa fa-ban" aria-hidden="true"></i> عدم دسترسی
+      </h1>
+      <p>متاسفانه شما دسترسی به این صفحه را ندارید.</p>
+      <!--<button class="btn btn-default" (click)="goBack()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> بازگشت
+      </button>-->
+
+      <button class="btn btn-success  mb-4" [routerLink]="['/login']"
+              queryParamsHandling="merge">
+        ورود
+      </button>
+    </div>
+  </div>
+  </div>
+

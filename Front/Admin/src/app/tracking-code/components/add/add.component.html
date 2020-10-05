@@ -1,0 +1,51 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">ثبت  </h4>
+
+  <div class="row container mt-4 mb-4" *ngIf="addForm">
+    <form (ngSubmit)="onSubmit(addForm.value)" class="form-horizontal"
+          [formGroup]="addForm"
+          style="padding:20px"
+          novalidate>
+      <div class="form-group row">
+
+        <div class="col-sm-12 col-xs-12 mt-3">
+          تاریخ:
+          <span class="font-xs text-danger">الزامی </span>
+
+
+          <dp-date-picker dir="ltr"
+                          formControlName="sendDate"
+                          mode="day"
+                          theme="dp-material"
+                          [config]="datePickerConfig">
+          </dp-date-picker>
+
+
+
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          توضیحات:
+          <span class="font-xs text-danger">الزامی </span>
+          <input type="text" class="form-control" placeholder="توضیحات" value="" formControlName="description" />
+        </div>
+        <div class="col-sm-12 col-xs-12 mt-3">
+          فایل:
+          <input type="file" formControlName="fileName" accept="text/csv,application/vnd.ms-excel"
+                 #fileName (change)="uploadIcon(fileName.files)" />
+          <span *ngIf="errorFile" class="text-danger"> {{errorFile}}</span>
+
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-success text-white mt-4" [disabled]="!addForm.valid">ثبت</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+

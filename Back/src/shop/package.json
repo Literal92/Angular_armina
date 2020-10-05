@@ -1,0 +1,18 @@
+{
+  "name": "dntcommon.web.core.testwebapp",
+  "version": "1.0.0",
+  "description": "client side resources of the project",
+  "scripts": {},
+  "author": "VahidN",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VahidN/DNTIdentity.git"
+  },
+  "dependencies": {
+    "jwt-decode": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/jwt-decode": "^2.2.1"
+  }
+}

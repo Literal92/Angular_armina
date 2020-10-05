@@ -1,0 +1,105 @@
+<notifier-container></notifier-container>
+
+<div class="card">
+  <h4 class="card-header">مدیریت فیلدها</h4>
+
+  <div class="card-body loading">
+    <div class="row">
+      <div class="col-12">
+        <!---->
+        <a class="btn btn-info mb-3 text-white" [routerLink]="['/field/add']">
+          <i class="fa fa-plus mr-1"></i>جدید
+        </a>
+
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-6 mb-2">
+        <select #Count (change)="onChSize(Count.value)" class="form-control">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <table class="table table-responsive-sm table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center">ردیف</th>
+              <th class="text-center">نام فیلد</th>
+              <th class="text-center">نوع</th>
+              <th class="text-center">اولویت</th>
+              <th class="text-center"></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-item [ngForOf]="fields" let-i="index">
+              <tr>
+                <td class="text-center">{{row+i}}</td>
+                <td class="text-center">
+                  <span *ngIf="item.title != undefined">
+                    {{item.title}}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span [ngSwitch]="item.fieldType">
+                    <label *ngSwitchCase="0">متن</label>
+                    <label *ngSwitchCase="1">یک انتخابی</label>
+                    <label *ngSwitchCase="2">چند انتخابی</label>
+                  </span>
+                </td>
+                <td class="text-center">
+                  {{item.order}}
+                </td>
+                <td class="text-center">
+
+                  <a class="btn btn-success" [routerLink]="['/field/edit', item.id]"
+                      title="ویرایش">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <button (click)="onDelete(item.id, index)" class="btn btn-danger" 
+                          title="حذف">
+                    <i class="fa fa-remove"></i>
+                  </button>
+
+                </td>
+
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+
+        <!-- paging -->
+        <div *ngIf="pages.length>0">
+          <ul class="meal-list hidden">
+            <li *ngFor="let i of pages| paginate: config">
+              {{i}}
+            </li>
+          </ul>
+
+          <div class="has-text-centered">
+            <pagination-controls [id]="config.id"
+                                 [maxSize]="maxSize"
+                                 [directionLinks]="directionLinks"
+                                 [autoHide]="autoHide"
+                                 [responsive]="responsive"
+                                 [previousLabel]="labels.previousLabel"
+                                 [nextLabel]="labels.nextLabel"
+                                 [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                 [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                                 [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                 (pageChange)="onPageChange($event)">
+
+            </pagination-controls>
+          </div>
+        </div>
+        <!-- /paging -->
+        <!-- loading -->
+        <!-- add calss loading to custome dive -->
+        <ngx-loading [show]="loading" [config]="configLoading"
+                     [template]="loadingTemplate"></ngx-loading>
+        <!-- /loading -->
+      </div>
+    </div>
+
+  </div>
+</div>
